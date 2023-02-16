@@ -5,25 +5,25 @@ $(document).ready(function(){
     console.log('Ready')
 
     //  Busque a data atual e atualize-a no DOM
-    $("#display_date").html(display_date)
+    $("#date").html(display_date)
 
     let predicted_emotion;
 
 
     // Escreva um evento, quando o botão Enviar for clicado
-    $('#predict_button').click(function(){
+    $('#button').click(function(){
 
         //  Obtenha o valor do texto da área de texto usando o método 'val()'
-        let text_value = $('').val()
+        let text_value = $('#text').val()
 
         //  Converta-o em um objeto JS.
         //  Forneça uma "chave" aqui e escreva o mesmo no arquivo app.py também para extrair dados
-        let input_text = {'' : text_value}
+        let input_text = {'customer_review' : text_value}
         console.log(input_text)
 
         //  requisição ajax
         $.ajax({
-
+            url : "/predict",
             //  tipo da requisição web
             type : 'POST',
 
@@ -42,14 +42,15 @@ $(document).ready(function(){
                 // extraia previsão e a URL do emoticon do resultado
                 //  atualize os elementos DOM
                 //  exiba-os
-                predicted_emotion = result.data.predicted_emotion
-                emo_url = result.data.predicted_emotion_img_url
+                let prediction = result.prediction
+                let emoji_url = result.url
+                console.log(emoji_url)
                 
-                $("#prediction").html(predicted_emotion)
-                $('#prediction').css("display", "block");
+                $('#sentiment').text(prediction)
+                $('#sentiment').show()
 
-                $("#emo_img_url").attr('src', emo_url);
-                $('#emo_img_url').css("display", "block");
+                $('#emoji').attr('src' , emoji_url)
+                $('#emoji').show()
 
             },
 
