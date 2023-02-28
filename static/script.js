@@ -28,7 +28,7 @@ $(document).ready(function(){
             type : 'POST',
 
             //  dados a serem enviados no formato JSON
-            data : JSON.stringify(),
+            data : JSON.stringify(input_text),
 
             //  o tipo de resposta esperado é json
             dataType : 'json',
